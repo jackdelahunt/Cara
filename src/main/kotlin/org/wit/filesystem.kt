@@ -167,4 +167,8 @@ class ImageData constructor(var name: String, val id: Int) {
         writer.name("id").value(id)
         writer.endObject()
     }
+
+    override fun toString(): String {
+        return "$id: $name"
+    }
 }
