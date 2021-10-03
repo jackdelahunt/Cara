@@ -1,4 +1,7 @@
 package org.wit
+
+import java.io.File
+
 val fs = FileSystem();
 
 fun main() {
@@ -10,14 +13,17 @@ fun main() {
         input = menu()
         when(input) {
             1 -> listImageData()
+            2 -> renameImage()
             0 -> {}
         }
+        println()
     }
     return;
 }
 
 fun menu(): Int {
     println("1: List all")
+    println("2: Rename")
     println("0: Exit")
     println("--------")
     print("> ")
@@ -27,9 +33,22 @@ fun menu(): Int {
 }
 
 fun listImageData() {
-    for(imageData in fs.imagesData) {
+    for(imageData in fs.imageDataArray) {
         println(imageData.toString())
     }
+}
+
+fun renameImage() {
+    print("Id>")
+    val id = readLine()!!.toInt()
+    print("Rename>")
+    val newName = readLine()!!
+
+    var foundImageData = fs.findById(id)!!
+    File("$imageDirectory/${foundImageData.name}")
+        .renameTo(File("$imageDirectory/$newName"))
+    foundImageData.name = newName
+    fs.save()
 }
 
 

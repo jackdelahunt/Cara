@@ -12,7 +12,7 @@ val imageDirectory = "$caraDirectory/images"
 val dataDirectory = "$caraDirectory/data"
 
 class FileSystem {
-    var imagesData = ArrayList<ImageData>()
+    var imageDataArray = ArrayList<ImageData>()
 
     init { // called after empty constructor
         val caraDirectoryFile = File(caraDirectory)
@@ -41,11 +41,11 @@ class FileSystem {
         if(File("$dataDirectory/index.json").exists()) {
             val indexedImages = loadFromIndex()
             val imageNameOnDisk = readImageNames()
-            imagesData = merge(indexedImages, imageNameOnDisk)
+            imageDataArray = merge(indexedImages, imageNameOnDisk)
         } else {
             createIndex()
             val imageNameOnDisk = readImageNames()
-            imagesData = buildImageData(imageNameOnDisk)
+            imageDataArray = buildImageData(imageNameOnDisk)
         }
 
         save()
@@ -143,6 +143,18 @@ class FileSystem {
         return imageDataArray;
     }
 
+    fun findById(id: Int): ImageData? {
+        var imageData: ImageData? = null;
+        for(item in imageDataArray) {
+            if(item.id == id) {
+                imageData = item
+                break
+            }
+        }
+
+        return imageData
+    }
+
     // save current imagesData to index.json
     fun save() {
         val writer = JsonWriter(OutputStreamWriter(
@@ -151,7 +163,7 @@ class FileSystem {
         writer.setIndent("  ")
         writer.beginArray()
         val gson = Gson()
-        for (imageData in imagesData) {
+        for (imageData in imageDataArray) {
             gson.toJson(imageData, ImageData::class.java, writer)
         }
         writer.endArray()
@@ -169,6 +181,6 @@ class ImageData constructor(var name: String, val id: Int) {
     }
 
     override fun toString(): String {
-        return "$id: $name"
+        return "($id) $name"
     }
 }
