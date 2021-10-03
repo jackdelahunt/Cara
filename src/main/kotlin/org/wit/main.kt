@@ -14,6 +14,7 @@ fun main() {
         when(input) {
             1 -> listImageData()
             2 -> renameImage()
+            3 -> delete()
             0 -> {}
         }
         println()
@@ -24,6 +25,7 @@ fun main() {
 fun menu(): Int {
     println("1: List all")
     println("2: Rename")
+    println("3: Delete")
     println("0: Exit")
     println("--------")
     print("> ")
@@ -49,6 +51,15 @@ fun renameImage() {
         .renameTo(File("$imageDirectory/$newName"))
     foundImageData.name = newName
     fs.save()
+}
+
+fun delete() {
+    print("Id>")
+    val id = readLine()!!.toInt()
+
+    var foundImageData = fs.findById(id)!!
+    File("$imageDirectory/${foundImageData.name}").delete()
+    fs.sync()
 }
 
 
