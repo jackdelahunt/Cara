@@ -1,22 +1,15 @@
 package org.wit.view
 
+import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Orientation
 import javafx.geometry.Pos
-import javafx.scene.control.Button
-import javafx.scene.control.Label
-import javafx.scene.image.ImageView
-import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
-import javafx.scene.paint.Color
 import org.wit.*
+import org.wit.controller.ImageViewController
 import tornadofx.*
-import tornadofx.Stylesheet.Companion.button
-import tornadofx.Stylesheet.Companion.label
 import java.io.File
 
 class MainView : View("Hello TornadoFX") {
-
-    val controller: MainController by inject()
 
     override val root = hbox {
         anchorpane {
@@ -57,25 +50,4 @@ class MainView : View("Hello TornadoFX") {
             }
         }
     }
-}
-
-class ImageIconView constructor(imageData: ImageData): View() {
-    override val root = hbox {
-        imageview(File("${imageDirectory}/${imageData.name}").toURI().toString())
-        borderpane {
-            prefWidth = 410.0
-            top = textfield(imageData.name) {
-                hgrow = Priority.ALWAYS
-                useMaxWidth = true
-                alignment = Pos.CENTER
-            }
-            center = button("rename") {
-                hgrow = Priority.ALWAYS
-                useMaxWidth = true
-            }
-        }
-    }
-}
-
-class MainController: Controller() {
 }
