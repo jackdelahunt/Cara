@@ -1,24 +1,25 @@
 package org.wit
 
+import tornadofx.launch
 import java.io.File
 
 val fs = FileSystem();
 
 fun main() {
-    //launch<MyApp>()
+    launch<MyApp>()
     fs.sync()
 
-    var input = -1
-    while(input != 0) {
-        input = menu()
-        when(input) {
-            1 -> listImageData()
-            2 -> renameImage()
-            3 -> delete()
-            0 -> {}
-        }
-        println()
-    }
+//    var input = -1
+//    while(input != 0) {
+//        input = menu()
+//        when(input) {
+//            1 -> listImageData()
+//            2 -> renameImage()
+//            3 -> delete()
+//            0 -> {}
+//        }
+//        println()
+//    }
     return;
 }
 
