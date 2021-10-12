@@ -3,6 +3,7 @@ package org.wit
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import org.wit.model.ImageData
 import java.io.*
 
 
@@ -73,7 +74,7 @@ class FileSystem {
         File("$imageDirectory/${imageData.name}")
             .renameTo(File("$imageDirectory/$to"))
         imageData.name = to
-        fs.save()
+        save()
     }
 
     public fun save() {
@@ -180,18 +181,5 @@ class FileSystem {
         }
 
         return imageDataArray;
-    }
-}
-
-class ImageData constructor(var name: String, val id: Int) {
-    fun toJson(writer: JsonWriter) {
-        writer.beginObject()
-        writer.name("name").value(name)
-        writer.name("id").value(id)
-        writer.endObject()
-    }
-
-    override fun toString(): String {
-        return "($id) $name"
     }
 }

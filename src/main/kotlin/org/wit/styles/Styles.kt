@@ -1,4 +1,4 @@
-package org.wit
+package org.wit.styles
 
 import javafx.scene.text.FontWeight
 import tornadofx.Stylesheet
