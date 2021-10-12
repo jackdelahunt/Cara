@@ -1,5 +1,6 @@
 package org.wit.view
 
+import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Orientation
 import javafx.geometry.Pos
 import javafx.scene.control.Button
@@ -60,11 +61,19 @@ class MainView : View("Hello TornadoFX") {
 }
 
 class ImageIconView constructor(imageData: ImageData): View() {
+
+    val controller: ImageViewController by inject()
+    val input = SimpleStringProperty()
+
+    init {
+        input.value = imageData.name
+    }
+
     override val root = hbox {
         imageview(File("${imageDirectory}/${imageData.name}").toURI().toString())
         borderpane {
             prefWidth = 410.0
-            top = textfield(imageData.name) {
+            top = textfield(input) {
                 hgrow = Priority.ALWAYS
                 useMaxWidth = true
                 alignment = Pos.CENTER
@@ -72,10 +81,19 @@ class ImageIconView constructor(imageData: ImageData): View() {
             center = button("rename") {
                 hgrow = Priority.ALWAYS
                 useMaxWidth = true
+                setOnAction {
+                    controller.rename(imageData.id, input.value!!)
+                }
             }
         }
     }
 }
 
 class MainController: Controller() {
+}
+
+class ImageViewController: Controller() {
+    fun rename(id: Int, to: String) {
+        fileSystem().rename(id, to)
+    }
 }

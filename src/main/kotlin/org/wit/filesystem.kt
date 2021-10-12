@@ -42,13 +42,7 @@ class FileSystem {
         }
     }
 
-    //
-    fun sync() {
-        // if index exist
-        // read data from index
-        // read names from disk
-        // create / purge
-
+    public fun sync() {
         if(File("$dataDirectory/index.json").exists()) {
             val indexedImages = loadFromIndex()
             val imageNameOnDisk = readImageNames()
@@ -62,7 +56,41 @@ class FileSystem {
         save()
     }
 
-    fun createIndex() {
+    public fun findById(id: Int): ImageData? {
+        var imageData: ImageData? = null;
+        for(item in imageDataArray) {
+            if(item.id == id) {
+                imageData = item
+                break
+            }
+        }
+
+        return imageData
+    }
+
+    public fun rename(id: Int, to: String) {
+        val imageData = findById(id) ?: return
+        File("$imageDirectory/${imageData.name}")
+            .renameTo(File("$imageDirectory/$to"))
+        imageData.name = to
+        fs.save()
+    }
+
+    public fun save() {
+        val writer = JsonWriter(OutputStreamWriter(
+            FileOutputStream("$dataDirectory/index.json", false),
+            "UTF-8"))
+        writer.setIndent("  ")
+        writer.beginArray()
+        val gson = Gson()
+        for (imageData in imageDataArray) {
+            gson.toJson(imageData, ImageData::class.java, writer)
+        }
+        writer.endArray()
+        writer.close()
+    }
+
+    private fun createIndex() {
         File("$dataDirectory/index.json").createNewFile()
 
         val writer = JsonWriter(OutputStreamWriter(
@@ -75,7 +103,7 @@ class FileSystem {
     }
 
     // returns list of imageData from index.json
-    fun loadFromIndex(): ArrayList<ImageData> {
+    private fun loadFromIndex(): ArrayList<ImageData> {
         val reader = JsonReader(InputStreamReader(
             FileInputStream("$dataDirectory/index.json"),
             "UTF-8"))
@@ -95,7 +123,7 @@ class FileSystem {
     }
 
     // returns a list of strings of the names of images
-    fun readImageNames(): ArrayList<String> {
+    private fun readImageNames(): ArrayList<String> {
         var imageNames = File(imageDirectory).list()!!
         val arrayList = ArrayList<String>()
         for(name in imageNames) {
@@ -107,7 +135,7 @@ class FileSystem {
     }
 
     // merges index with image names
-    fun merge(imageDataArray: ArrayList<ImageData>, imageNameArray: ArrayList<String>): ArrayList<ImageData> {
+    private fun merge(imageDataArray: ArrayList<ImageData>, imageNameArray: ArrayList<String>): ArrayList<ImageData> {
         // record max id
         // remove image data that is not on disk
 
@@ -145,7 +173,7 @@ class FileSystem {
         return toBeSaved
     }
 
-    fun buildImageData(imageNames: ArrayList<String>): ArrayList<ImageData> {
+    private fun buildImageData(imageNames: ArrayList<String>): ArrayList<ImageData> {
         val imageDataArray = ArrayList<ImageData>()
         for (i in 0 until imageNames.size) {
             imageDataArray.add(ImageData(imageNames[i], i))
@@ -153,34 +181,6 @@ class FileSystem {
 
         return imageDataArray;
     }
-
-    fun findById(id: Int): ImageData? {
-        var imageData: ImageData? = null;
-        for(item in imageDataArray) {
-            if(item.id == id) {
-                imageData = item
-                break
-            }
-        }
-
-        return imageData
-    }
-
-    // save current imagesData to index.json
-    fun save() {
-        val writer = JsonWriter(OutputStreamWriter(
-            FileOutputStream("$dataDirectory/index.json", false),
-            "UTF-8"))
-        writer.setIndent("  ")
-        writer.beginArray()
-        val gson = Gson()
-        for (imageData in imageDataArray) {
-            gson.toJson(imageData, ImageData::class.java, writer)
-        }
-        writer.endArray()
-        writer.close()
-    }
-
 }
 
 class ImageData constructor(var name: String, val id: Int) {
