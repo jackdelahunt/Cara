@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import org.wit.model.ImageData
+import org.wit.model.ImageGroup
 import java.io.*
 
 
@@ -25,6 +26,7 @@ fun fileSystem(): FileSystem {
 
 class FileSystem {
     var imageDataArray = ArrayList<ImageData>()
+    var imageGroupArray = ArrayList<ImageGroup>()
 
     init { // called after empty constructor
         val caraDirectoryFile = File(caraDirectory)
@@ -78,6 +80,12 @@ class FileSystem {
     }
 
     public fun save() {
+        imageGroupArray.add(ImageGroup("test"))
+        saveImageData()
+        saveImageGroups()
+    }
+
+    private fun saveImageData() {
         val writer = JsonWriter(OutputStreamWriter(
             FileOutputStream("$dataDirectory/index.json", false),
             "UTF-8"))
@@ -86,6 +94,20 @@ class FileSystem {
         val gson = Gson()
         for (imageData in imageDataArray) {
             gson.toJson(imageData, ImageData::class.java, writer)
+        }
+        writer.endArray()
+        writer.close()
+    }
+
+    private fun saveImageGroups() {
+        val writer = JsonWriter(OutputStreamWriter(
+            FileOutputStream("$dataDirectory/groups.json", false),
+            "UTF-8"))
+        writer.setIndent("  ")
+        writer.beginArray()
+        val gson = Gson()
+        for (imageGroup in imageGroupArray) {
+            gson.toJson(imageGroup, ImageGroup::class.java, writer)
         }
         writer.endArray()
         writer.close()

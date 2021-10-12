@@ -3,9 +3,9 @@ package org.wit.view
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
 import javafx.scene.layout.Priority
-import org.wit.ImageData
 import org.wit.controller.ImageViewController
 import org.wit.imageDirectory
+import org.wit.model.ImageData
 import tornadofx.*
 import java.io.File
 
