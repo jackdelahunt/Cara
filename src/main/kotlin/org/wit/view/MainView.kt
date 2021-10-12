@@ -42,7 +42,7 @@ class MainView : View("Hello TornadoFX") {
                     vgrow = Priority.ALWAYS
 
                     flowpane {
-                        for (imageData in controller.filesystem.imageDataArray) {
+                        for (imageData in fileSystem().imageDataArray) {
                             this += ImageIconView(imageData)
                         }
                     }
@@ -77,17 +77,5 @@ class ImageIconView constructor(imageData: ImageData): View() {
     }
 }
 
-fun imageIcon(imageData: ImageData): HBox {
-    val hbox = HBox()
-    hbox += ImageView(File("${imageDirectory}/${imageData.name}").toURI().toString())
-    hbox += Label(imageData.name)
-    return hbox
-}
-
 class MainController: Controller() {
-    var filesystem = FileSystem()
-
-    init {
-        filesystem.sync()
-    }
 }

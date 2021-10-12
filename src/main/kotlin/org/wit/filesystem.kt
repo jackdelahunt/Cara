@@ -11,6 +11,17 @@ val caraDirectory = "$userHome/Cara"
 val imageDirectory = "$caraDirectory/images"
 val dataDirectory = "$caraDirectory/data"
 
+private var fileSystem: FileSystem? = null;
+
+fun fileSystem(): FileSystem {
+    if(fileSystem == null) {
+        fileSystem = FileSystem()
+        fileSystem!!.sync()
+    }
+
+    return fileSystem!!;
+}
+
 class FileSystem {
     var imageDataArray = ArrayList<ImageData>()
 
