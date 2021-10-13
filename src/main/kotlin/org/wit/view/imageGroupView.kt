@@ -27,6 +27,12 @@ class ImageGroupView : View("Hello TornadoFX") {
                     item(text = "Settings")
                 }
 
+                button("Create group") {
+                    setOnAction {
+                        find<CreateGroupView>().openModal()
+                    }
+                }
+
                 for(imageGroup in fileSystem().imageGroupArray) {
                     add(groupView(imageGroup))
                 }

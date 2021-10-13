@@ -6,7 +6,7 @@ import org.wit.fileSystem
 import org.wit.model.ImageData
 import tornadofx.*
 
-class GroupAdderFragment: Fragment("") {
+class GroupAdderFragment: Fragment("Add to a group") {
     val imageData: ImageData = params["imageData"] as ImageData
     val input = SimpleStringProperty()
 
