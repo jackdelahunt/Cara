@@ -80,7 +80,11 @@ class FileSystem {
     }
 
     public fun save() {
-        imageGroupArray.add(ImageGroup("test"))
+        // temp for testing
+        val ig = ImageGroup("test")
+        ig.ids.add(5)
+        ig.ids.add(7)
+        imageGroupArray.add(ig);
         saveImageData()
         saveImageGroups()
     }

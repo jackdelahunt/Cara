@@ -1,7 +1,7 @@
 package org.wit
 
 import org.wit.styles.Styles
-import org.wit.view.MainView
+import org.wit.view.allImagesView
 import tornadofx.App
 
-class MyApp: App(MainView::class, Styles::class)
+class MyApp: App(allImagesView::class, Styles::class)

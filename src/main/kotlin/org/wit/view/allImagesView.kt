@@ -6,10 +6,11 @@ import javafx.geometry.Pos
 import javafx.scene.layout.Priority
 import org.wit.*
 import org.wit.controller.ImageViewController
+import org.wit.model.ImageData
 import tornadofx.*
 import java.io.File
 
-class MainView : View("Hello TornadoFX") {
+class allImagesView : View("Hello TornadoFX") {
 
     override val root = hbox {
         anchorpane {
@@ -24,10 +25,11 @@ class MainView : View("Hello TornadoFX") {
                     prefWidth = parent.prefWidth(-1.0)
                     orientation = Orientation.HORIZONTAL
 
-                    item(text = "All Images") {
-                        activeItem = this
+                    item(text = "Groups") {
+                        whenSelected {
+                            replaceWith(ImageGroupView())
+                        }
                     }
-                    item(text = "Groups")
                     item(text = "Settings")
                 }
 
