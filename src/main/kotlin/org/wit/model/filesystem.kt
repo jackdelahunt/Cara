@@ -47,13 +47,19 @@ class FileSystem {
 
     public fun sync() {
         if(File("$dataDirectory/index.json").exists()) {
-            val indexedImages = loadFromIndex()
+            val indexedImages = loadFromImageIndex()
             val imageNameOnDisk = readImageNames()
             imageDataArray = merge(indexedImages, imageNameOnDisk)
         } else {
-            createIndex()
+            createImageIndex()
             val imageNameOnDisk = readImageNames()
             imageDataArray = buildImageData(imageNameOnDisk)
+        }
+
+        if(File("$dataDirectory/groups.json").exists()) {
+            imageGroupArray = loadFromGroupIndex()
+        } else {
+            createGroupIndex()
         }
 
         save()
@@ -100,7 +106,6 @@ class FileSystem {
     }
 
     public fun save() {
-        createGroup("test")
         saveImageData()
         saveImageGroups()
     }
@@ -133,7 +138,7 @@ class FileSystem {
         writer.close()
     }
 
-    private fun createIndex() {
+    private fun createImageIndex() {
         File("$dataDirectory/index.json").createNewFile()
 
         val writer = JsonWriter(OutputStreamWriter(
@@ -145,8 +150,39 @@ class FileSystem {
         writer.close()
     }
 
+    private fun createGroupIndex() {
+        File("$dataDirectory/groups.json").createNewFile()
+
+        val writer = JsonWriter(OutputStreamWriter(
+            FileOutputStream("$dataDirectory/groups.json", false),
+            "UTF-8"))
+        writer.setIndent("  ")
+        writer.beginArray()
+        writer.endArray()
+        writer.close()
+    }
+
+    private fun loadFromGroupIndex(): ArrayList<ImageGroup> {
+        val reader = JsonReader(InputStreamReader(
+            FileInputStream("$dataDirectory/groups.json"),
+            "UTF-8"))
+
+        val imageGroupArray = ArrayList<ImageGroup>()
+        val gson = Gson()
+        reader.beginArray()
+
+        while (reader.hasNext()) {
+            val imageGroup: ImageGroup = gson.fromJson(reader, ImageGroup::class.java)
+            imageGroupArray.add(imageGroup)
+        }
+
+        reader.endArray()
+        reader.close()
+        return imageGroupArray
+    }
+
     // returns list of imageData from index.json
-    private fun loadFromIndex(): ArrayList<ImageData> {
+    private fun loadFromImageIndex(): ArrayList<ImageData> {
         val reader = JsonReader(InputStreamReader(
             FileInputStream("$dataDirectory/index.json"),
             "UTF-8"))
