@@ -86,13 +86,21 @@ class FileSystem {
                 return true;
             }
         }
-        return false;   
+        return false;
+    }
+
+    public fun createGroup(name: String): Boolean {
+        val imageGroup = ImageGroup(name)
+        for(group in imageGroupArray) {
+            if(group.name == name) return false
+        }
+
+        imageGroupArray.add(imageGroup)
+        return true
     }
 
     public fun save() {
-        // temp for testing
-        val ig = ImageGroup("test")
-        imageGroupArray.add(ig);
+        createGroup("test")
         saveImageData()
         saveImageGroups()
     }
