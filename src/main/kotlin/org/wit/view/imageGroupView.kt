@@ -1,6 +1,7 @@
 package org.wit.view
 
 import javafx.geometry.Orientation
+import javafx.scene.text.FontWeight
 import org.wit.fileSystem
 import org.wit.model.ImageGroup
 import tornadofx.*
@@ -45,12 +46,12 @@ class ImageGroupView : View("Hello TornadoFX") {
 
 class GroupView constructor(imageGroup: ImageGroup): View() {
 
-    init {
-        println("Hello")
-    }
-
     override val root = vbox {
-        label(imageGroup.name) {  }
+        label(imageGroup.name) {
+            style {
+                fontWeight = FontWeight.BOLD
+            }
+        }
         vbox {
             for (id in imageGroup.ids) {
                 label(fileSystem().findById(id)!!.name) {  }

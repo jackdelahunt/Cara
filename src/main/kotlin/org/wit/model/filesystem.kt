@@ -79,11 +79,19 @@ class FileSystem {
         save()
     }
 
+    public fun addToGroup(id: Int, groupName: String): Boolean {
+        for (group in imageGroupArray) {
+            if(group.name == groupName && !group.ids.contains(id)) {
+                group.ids.add(id);
+                return true;
+            }
+        }
+        return false;   
+    }
+
     public fun save() {
         // temp for testing
         val ig = ImageGroup("test")
-        ig.ids.add(5)
-        ig.ids.add(7)
         imageGroupArray.add(ig);
         saveImageData()
         saveImageGroups()

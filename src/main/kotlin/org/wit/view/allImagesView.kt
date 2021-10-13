@@ -1,14 +1,9 @@
 package org.wit.view
 
-import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Orientation
-import javafx.geometry.Pos
 import javafx.scene.layout.Priority
 import org.wit.*
-import org.wit.controller.ImageViewController
-import org.wit.model.ImageData
 import tornadofx.*
-import java.io.File
 
 class allImagesView : View("Hello TornadoFX") {
 
