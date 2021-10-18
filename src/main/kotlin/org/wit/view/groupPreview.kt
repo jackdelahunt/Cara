@@ -21,14 +21,24 @@ class GroupPreview constructor(imageGroup: ImageGroup): View() {
 
         override val root = vbox {
         prefWidth = 740.0
-        label(imageGroup.name) {
-            alignment = Pos.CENTER
-            useMaxWidth = true
-            vgrow = Priority.ALWAYS
 
-            style {
-                fontWeight = FontWeight.BOLD
-                fontSize = 20.px
+        hbox {
+            alignment = Pos.CENTER
+            label(imageGroup.name) {
+
+                useMaxWidth = true
+                vgrow = Priority.ALWAYS
+
+                style {
+                    fontWeight = FontWeight.BOLD
+                    fontSize = 20.px
+                }
+            }
+
+            button("Delete") {
+                setOnAction {
+                    fileSystem().deleteGroup(imageGroup)
+                }
             }
         }
 

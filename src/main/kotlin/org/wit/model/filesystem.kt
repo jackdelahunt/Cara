@@ -105,6 +105,10 @@ class FileSystem {
         return true
     }
 
+    public fun deleteGroup(imageGroup: ImageGroup) {
+        imageGroupArray.remove(imageGroup);
+    }
+
     public fun save() {
         saveImageData()
         saveImageGroups()
