@@ -34,6 +34,16 @@ class ImageIconView constructor(imageData: ImageData): View() {
                     controller.rename(imageData.id, input.value!!)
                 }
             }
+
+            bottom = button("Add to group") {
+                hgrow = Priority.ALWAYS
+                useMaxWidth = true
+                setOnAction {
+                    find<GroupAdderFragment>(
+                        mapOf("imageData" to imageData)
+                    ).openModal()
+                }
+            }
         }
     }
 }
