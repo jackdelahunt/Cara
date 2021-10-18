@@ -1,39 +1,34 @@
 package org.wit.view
 
-import javafx.geometry.Pos
-import javafx.scene.layout.Priority
-import javafx.scene.text.FontWeight
+import javafx.beans.property.SimpleStringProperty
+import javafx.scene.image.ImageView
 import org.wit.fileSystem
 import org.wit.imageDirectory
 import org.wit.model.ImageGroup
 import tornadofx.*
 import java.io.File
 
-class GroupView constructor(imageGroup: ImageGroup): View() {
+class GroupView constructor(): Fragment("") {
 
+    val imageGroup: ImageGroup by param()
 
-        val previewImageFile = if(imageGroup.ids.size > 0) {
-            val name = fileSystem().findById(imageGroup.ids[0])!!.name
-            File("$imageDirectory/$name").toURI().toString()
-        } else {
-            {}.javaClass.getResource("/empty.png")!!.toURI().toString()
-        }
+    init {
+        this.title = imageGroup.name
+    }
 
-        override val root = vbox {
+    override val root = anchorpane {
         prefWidth = 740.0
-        label(imageGroup.name) {
-            alignment = Pos.CENTER
-            useMaxWidth = true
-            vgrow = Priority.ALWAYS
-
-            style {
-                fontWeight = FontWeight.BOLD
-                fontSize = 20.px
+        prefHeight = 540.0
+        scrollpane {
+            flowpane {
+                useMaxWidth = true
+                for (id in imageGroup.ids) {
+                    val imageData = fileSystem().findById(id)!!
+                    add(
+                        ImageView(File("$imageDirectory/${imageData.name}").toURI().toString())
+                    )
+                }
             }
-        }
-
-        imageview(previewImageFile) {
-            alignment = Pos.CENTER
         }
     }
 }

@@ -38,7 +38,7 @@ class ImageGroupView : View("Hello TornadoFX") {
                     vgrow = Priority.ALWAYS
                     flowpane {
                         for (imageGroup in fileSystem().imageGroupArray) {
-                            add(GroupView(imageGroup))
+                            add(GroupPreview(imageGroup))
                         }
                     }
                 }
