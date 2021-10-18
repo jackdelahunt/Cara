@@ -5,7 +5,7 @@ import javafx.scene.layout.Priority
 import org.wit.*
 import tornadofx.*
 
-class allImagesView : View("Hello TornadoFX") {
+class AllImagesView : View("Hello TornadoFX") {
 
     override val root = hbox {
         anchorpane {

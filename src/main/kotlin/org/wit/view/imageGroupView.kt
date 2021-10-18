@@ -1,6 +1,7 @@
 package org.wit.view
 
 import javafx.geometry.Orientation
+import javafx.scene.layout.Priority
 import org.wit.fileSystem
 import tornadofx.*
 
@@ -21,7 +22,7 @@ class ImageGroupView : View("Hello TornadoFX") {
 
                     item(text = "Images") {
                         whenSelected {
-                            replaceWith(allImagesView())
+                            replaceWith(AllImagesView())
                         }
                     }
                     item(text = "Settings")
@@ -33,8 +34,13 @@ class ImageGroupView : View("Hello TornadoFX") {
                     }
                 }
 
-                for(imageGroup in fileSystem().imageGroupArray) {
-                    add(groupView(imageGroup))
+                scrollpane {
+                    vgrow = Priority.ALWAYS
+                    flowpane {
+                        for (imageGroup in fileSystem().imageGroupArray) {
+                            add(GroupView(imageGroup))
+                        }
+                    }
                 }
 
                 listmenu(theme = "blue") {
