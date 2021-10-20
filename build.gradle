@@ -15,9 +15,14 @@ application {
 
 dependencies {
     implementation "no.tornado:tornadofx:$tornadofx_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit:1.5.31'
 
     implementation 'com.google.code.gson:gson:2.8.8'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 compileKotlin {
