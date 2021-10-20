@@ -77,6 +77,16 @@ class FileSystem {
         return imageData
     }
 
+    public fun findByName(name: String): ImageData? {
+        for(data in fileSystem().imageDataArray) {
+            if(data.name == name) {
+                return data;
+            }
+        }
+
+        return null;
+    }
+
     public fun rename(id: Int, to: String) {
         val imageData = findById(id) ?: return
         File("$imageDirectory/${imageData.name}")
@@ -107,6 +117,14 @@ class FileSystem {
 
     public fun deleteGroup(imageGroup: ImageGroup) {
         imageGroupArray.remove(imageGroup);
+    }
+
+    public fun getGroup(name: String): ImageGroup? {
+        for(group in imageGroupArray) {
+            if(group.name == name) return group;
+        }
+
+        return null;
     }
 
     public fun save() {
