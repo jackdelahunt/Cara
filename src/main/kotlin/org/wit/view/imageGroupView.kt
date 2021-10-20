@@ -9,8 +9,8 @@ class ImageGroupView : View("Hello TornadoFX") {
 
     override val root = hbox {
         anchorpane {
-            prefWidth = 740.0
-            prefHeight = 540.0
+            prefWidth = 1080.0
+            prefHeight = 720.0
 
             vbox {
                 prefWidth = parent.prefWidth(-1.0)
@@ -25,7 +25,6 @@ class ImageGroupView : View("Hello TornadoFX") {
                             replaceWith(AllImagesView())
                         }
                     }
-                    item(text = "Settings")
                 }
 
                 button("Create group") {

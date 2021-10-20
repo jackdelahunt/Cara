@@ -21,7 +21,7 @@ class ImageIconView constructor(imageData: ImageData): View() {
     override val root = hbox {
         imageview(File("$imageDirectory/${imageData.name}").toURI().toString())
         borderpane {
-            prefWidth = 410.0
+            prefWidth = 780.0
             top = textfield(input) {
                 hgrow = Priority.ALWAYS
                 useMaxWidth = true
