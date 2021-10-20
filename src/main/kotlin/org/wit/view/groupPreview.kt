@@ -20,7 +20,7 @@ class GroupPreview constructor(imageGroup: ImageGroup): View() {
         }
 
         override val root = vbox {
-        prefWidth = 740.0
+        prefWidth = 1080.0
 
         hbox {
             alignment = Pos.CENTER
